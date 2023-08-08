@@ -41,10 +41,10 @@ pipeline {
       }
     }
 
-    stage('Post-Build Cleanup') {
-      steps {
-        cleanWs() // Clean up workspace after the build completes
-            }
-        }
+   // stage('Post-Build Cleanup') {
+   //   steps {
+     //   cleanWs() // Clean up workspace after the build completes
+    //        }
+     //   }
     }
 }
