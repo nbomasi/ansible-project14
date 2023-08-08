@@ -9,5 +9,13 @@ pipeline {
         }
       }
     }
+
+    stages('test') {
+      steps {
+        script {
+          sh 'echo "Testing Stage"'
+        }
+      }
+    }
     }
 }
