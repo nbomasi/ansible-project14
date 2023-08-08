@@ -1,7 +1,14 @@
 pipeline {
     agent any
 
+  
   stages {
+    stage('Pre-Build Cleanup') {
+      steps {
+        cleanWs() // Clean up workspace before the build starts
+            }
+        }
+
     stage('Build') {
       steps {
         script {
@@ -17,5 +24,27 @@ pipeline {
         }
       }
     }
+
+    stage('package') {
+      steps {
+        script {
+          sh 'echo "To package application"'
+        }
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        script {
+          sh 'echo "To deploy application"'
+        }
+      }
+    }
+
+    stage('Post-Build Cleanup') {
+      steps {
+        cleanWs() // Clean up workspace after the build completes
+            }
+        }
     }
 }
