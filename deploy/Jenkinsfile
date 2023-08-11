@@ -1,50 +1,48 @@
 pipeline {
-    agent any
+  agent any
 
-  
-  stages {
-    stage('Pre-Build Cleanup') {
-      steps {
-        cleanWs() // Clean up workspace before the build starts
+  environment {
+      ANSIBLE_CONFIG="${WORKSPACE}/deploy/ansible.cfg"
+    }
+
+  // parameters {
+  //     string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
+  //   }
+
+  stages{
+      stage("Initial cleanup") {
+          steps {
+            dir("${WORKSPACE}") {
+              deleteDir()
             }
+          }
         }
 
-    stage('Build') {
-      steps {
-        script {
-          sh 'echo "Building Stage"'
+      stage('Checkout SCM') {
+         steps{
+            //git branch: 'main', url: 'https://github.com/nbomasi/ansible-project14.git'
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/nbomasi/ansible-project14.git']])
+         }
+       }
+
+      stage('Prepare Ansible For Execution') {
+        steps {
+          sh 'echo ${WORKSPACE}' 
+          sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'  
+        }
+     }
+
+      stage('Run Ansible playbook') {
+        steps {
+           ansiblePlaybook become: true, colorized: true, credentialsId: 'ansible-ssh-key', installation: 'ansible', inventory: 'inventory/dev', playbook: 'playbooks/site.yml'
+         }
+      }
+
+      stage('Clean Workspace after build'){
+        steps{
+          cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
         }
       }
-    }
+   }
 
-    stage('test') {
-      steps {
-        script {
-          sh 'echo "Testing Stage"'
-        }
-      }
-    }
-
-    stage('package') {
-      steps {
-        script {
-          sh 'echo "To package application"'
-        }
-      }
-    }
-
-    stage('deploy') {
-      steps {
-        script {
-          sh 'echo "To deploy application"'
-        }
-      }
-    }
-
-   // stage('Post-Build Cleanup') {
-   //   steps {
-     //   cleanWs() // Clean up workspace after the build completes
-    //        }
-     //   }
-    }
 }

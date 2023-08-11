@@ -1,16 +1,15 @@
-[nfs]
-172.31.16.151 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+[tooling]
+<Tooling-Web-Server-Private-IP-Address>
 
-[webservers]
-172.31.30.92 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
-172.31.18.237 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
-172.31.26.130 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+[todo]
+<Todo-Web-Server-Private-IP-Address>
+
+[nginx]
+172.31.20.129
+
+[db:vars]
+ansible_user=ubuntu
+ansible_python_interpreter=/usr/bin/python
 
 [db]
-172.31.25.114 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
-
-[jenkins]
-172.31.22.52 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa ansible_python_interpreter=/usr/bin/python3
-
-[lb]
-172.31.26.13 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+172.31.27.62
