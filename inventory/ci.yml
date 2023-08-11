@@ -2,15 +2,15 @@
 #[jenkins]
 #172.31.18.195
 
-#[nginx]
-#172.31.20.129
+[artifactory]
+172.31.23.199 ansible_user='ubuntu'
 
 #[sonarqube]
 #172.31.20.109
 
-[artifactory]
-172.31.23.199
 
-[db:vars]
-ansible_user=ubuntu
+
+
+# [db:vars]
+# ansible_user=ubuntu
 #ansible_python_interpreter=/usr/bin/python
