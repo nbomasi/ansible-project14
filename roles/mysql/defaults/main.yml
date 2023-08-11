@@ -117,6 +117,12 @@ mysql_databases:
      encoding: utf8
      replicate: 1
 
+mysql_databases:
+  - name: homestead
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1     
+
 # Users.
 # I ALSO EDITED THIS SESSION, ADDING THE NAME OD USER AS webaccess, host 0.0.0.0, passeord secret, and the priv sessio
 mysql_users:
@@ -124,6 +130,13 @@ mysql_users:
      host: 0.0.0.0
      password: secret
      priv: '*.*:ALL,GRANT'
+
+mysql_users:
+  - name: homestead
+    host: 172.31.18.195
+    password: sePret^i
+    priv: '*.*:ALL,GRANT'
+# The Ip address is for jenkins server where client db will be
 
 # Replication settings (replication is only enabled if master/user have values).
 mysql_server_id: "1"
