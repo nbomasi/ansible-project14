@@ -9,7 +9,7 @@
 
 [db:vars]
 ansible_user=ubuntu
-ansible_python_interpreter=/usr/bin/python
+#ansible_python_interpreter=/usr/bin/python
 
 [db]
 172.31.27.62
