@@ -1,7 +1,8 @@
 ---
 - hosts: nginx
   roles:
-    - { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
+     - nginx
+    #- { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
     # - { role: apache, when: enable_apache_lb and load_balancer_is_required }
 
 #NOTE: ON nginx role, tasks/main.yml, default/main.yml, template/nginx.conf.j2 were edited by me for load balancing configuration, not just to install nginx
