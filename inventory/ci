@@ -3,7 +3,7 @@
 #172.31.18.195
 
 [artifactory]
-172.31.23.199 ansible_user='ubuntu'
+172.31.16.178 ansible_user='ec2-user'
 
 #[sonarqube]
 #172.31.20.109

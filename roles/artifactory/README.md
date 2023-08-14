@@ -11,8 +11,6 @@ Additional variables can be found in [defaults/main.yml](./defaults/main.yml).
 ```
 ---
 - hosts: artifactory_servers
-  collections:
-    - community.general
   roles:
     - artifactory
 ```
@@ -22,8 +20,6 @@ The Artifactory role supports software upgrades. To use a role to perform a soft
 
 ```
 - hosts: artifactory_servers
-  collections:
-    - community.general
   vars:
     artifactory_version: "{{ lookup('env', 'artifactory_version_upgrade') }}"
     artifactory_upgrade_only: true
