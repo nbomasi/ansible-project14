@@ -46,7 +46,7 @@ pipeline {
 
        stage('Prepare Dependencies') {
       steps {
-             sh 'mv php-todo/.env.sample php-todo/.env' 
+             sh 'mv /home/ubuntu/php-todo/.env.sample /home/ubuntu/php-todo/.env' 
              sh 'composer install'
              sh 'php artisan migrate'
              sh 'php artisan db:seed'
