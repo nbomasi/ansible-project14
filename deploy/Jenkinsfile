@@ -20,29 +20,40 @@ pipeline {
 
       stage('Checkout SCM') {
          steps{
-            //git branch: 'main', url: 'https://github.com/nbomasi/ansible-project14.git'
-            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/nbomasi/ansible-project14.git']])
+            git branch: 'main', url: 'https://github.com/darey-devops/php-todo.git'
+            //checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/nbomasi/ansible-project14.git']])
          }
        }
 
-      stage('Prepare Ansible For Execution') {
-        steps {
-          sh 'echo ${WORKSPACE}' 
-          sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'  
-        }
-     }
+    //   stage('Prepare Ansible For Execution') {
+    //     steps {
+    //       sh 'echo ${WORKSPACE}' 
+    //       sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'  
+    //     }
+    //  }
 
-      stage('Run Ansible playbook') {
-        steps {
-           ansiblePlaybook become: true, colorized: true, credentialsId: 'ansible-ssh-key', installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml'
-         }
+    //   stage('Run Ansible playbook') {
+    //     steps {
+    //        ansiblePlaybook become: true, colorized: true, credentialsId: 'ansible-ssh-key', installation: 'ansible', inventory: 'inventory/${inventory}', playbook: 'playbooks/site.yml'
+    //      }
+    //   }
+
+      //stage('Clean Workspace after build'){
+       // steps{
+       //   cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+      //  }
+      //}
+
+       stage('Prepare Dependencies') {
+      steps {
+             sh 'mv .env.sample .env'
+             sh 'composer install'
+             sh 'php artisan migrate'
+             sh 'php artisan db:seed'
+             sh 'php artisan key:generate'
       }
-
-      stage('Clean Workspace after build'){
-        steps{
-          cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
-        }
-      }
-   }
-
+    }
+  }
 }
+   
+
